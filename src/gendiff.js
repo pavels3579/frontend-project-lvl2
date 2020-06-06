@@ -6,28 +6,24 @@ import _ from 'lodash';
 
 const getdiff = (filepath1, filepath2) => {
   let result = '';
-  let path1 = filepath1;
-  let path2 = filepath2;
   const workingDirectory = process.cwd();
   const newLine = '\r\n';
 
-  if (!path1.includes(workingDirectory)) {
-    path1 = path.resolve(workingDirectory, path1);
+  if (!filepath1.includes(workingDirectory)) {
+    filepath1 = path.resolve(workingDirectory, filepath1);
   }
 
-  if (!path2.includes(workingDirectory)) {
-    path2 = path.resolve(workingDirectory, path2);
+  if (!filepath2.includes(workingDirectory)) {
+    filepath2 = path.resolve(workingDirectory, filepath2);
   }
 
-  const json1 = fs.readFileSync(path1);
+  const json1 = fs.readFileSync(filepath1);
   const obj1 = JSON.parse(json1);
-
-  const json2 = fs.readFileSync(path.resolve(process.cwd(), filepath2));
+  const json2 = fs.readFileSync(filepath2);
   const obj2 = JSON.parse(json2);
+  const keys = _.uniq([...Object.keys(obj1), ...Object.keys(obj2)]);
 
   result = `{${newLine}`;
-
-  const keys = _.uniq([...Object.keys(obj1), ...Object.keys(obj2)]);
 
   for (let i = 0; i < keys.length; i += 1) {
     if (_.has(obj2, keys[i]) && _.has(obj1, keys[i])) {
