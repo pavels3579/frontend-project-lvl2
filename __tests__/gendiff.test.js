@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals';
-import gendiff from '../src/gendiff.js';
+import getdiff from '../src/getdiff.js';
 
 test('gendiff', () => {
   const result = '{\r\n\
@@ -11,6 +11,10 @@ test('gendiff', () => {
   + verbose: true\r\n\
 }';
 
-  expect(gendiff('fixtures/before.json', 'fixtures/after.json')).toEqual(result);
-  // expect(gendiff('')).toEqual('');
+  const dirname = process.cwd();
+  // console.log('1', __dirname);
+
+  const filepath1 = `${dirname}/__fixtures__/before.json`;
+  const filepath2 = `${dirname}/__fixtures__/after.json`;
+  expect(getdiff(filepath1, filepath2)).toEqual(result);
 });
