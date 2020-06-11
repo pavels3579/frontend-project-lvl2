@@ -1,8 +1,12 @@
 import { test, expect } from '@jest/globals';
-import getdiff from '../src/getdiff.js';
+import genDiff from '../src/getdiff.js';
 
-test('gendiff', () => {
-  const result = [
+let result;
+let dirname;
+
+beforeEach(() => {
+  const newLine = '\r\n';
+  result = [
     '{',
     '    host: hexlet.io',
     '  + timeout: 20',
@@ -11,13 +15,20 @@ test('gendiff', () => {
     '  - follow: false',
     '  + verbose: true',
     '}',
-  ];
+  ].join(newLine);
 
-  const dirname = process.cwd();
+  dirname = process.cwd();
   // console.log('1', __dirname);
-  const newLine = '\r\n';
+});
 
+test('gendiff json', () => {
   const filepath1 = `${dirname}/__fixtures__/before.json`;
   const filepath2 = `${dirname}/__fixtures__/after.json`;
-  expect(getdiff(filepath1, filepath2)).toEqual(result.join(newLine));
+  expect(genDiff(filepath1, filepath2)).toEqual(result);
+});
+
+test('gendiff yaml', () => {
+  const filepath1 = `${dirname}/__fixtures__/before.yml`;
+  const filepath2 = `${dirname}/__fixtures__/after.yml`;
+  expect(genDiff(filepath1, filepath2)).toEqual(result);
 });

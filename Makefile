@@ -2,7 +2,7 @@ install:
 	  npm install
 
 test:
-	npm test
+	  npm test
 
 publish:
 	  npm publish  --dry-run
@@ -11,4 +11,4 @@ lint:
 	  npx eslint .
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8
+	  npm test -- --coverage --coverageProvider=v8
