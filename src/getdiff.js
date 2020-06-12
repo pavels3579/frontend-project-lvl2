@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import ini from 'ini';
 import getParsing from './parsers.js';
 
 
@@ -25,6 +26,10 @@ const getQbject = (filePath) => {
 
   if (path.extname(filePath) === '.yml') {
     return yaml.safeLoad(content);
+  }
+
+  if (path.extname(filePath) === '.ini') {
+    return ini.parse(content);
   }
 
   return {};

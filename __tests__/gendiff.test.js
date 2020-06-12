@@ -17,18 +17,24 @@ beforeEach(() => {
     '}',
   ].join(newLine);
 
-  dirname = process.cwd();
+  dirname = `${process.cwd()}/__fixtures__/`;
   // console.log('1', __dirname);
 });
 
 test('gendiff json', () => {
-  const filepath1 = `${dirname}/__fixtures__/before.json`;
-  const filepath2 = `${dirname}/__fixtures__/after.json`;
+  const filepath1 = `${dirname}before.json`;
+  const filepath2 = `${dirname}after.json`;
   expect(genDiff(filepath1, filepath2)).toEqual(result);
 });
 
 test('gendiff yaml', () => {
-  const filepath1 = `${dirname}/__fixtures__/before.yml`;
-  const filepath2 = `${dirname}/__fixtures__/after.yml`;
+  const filepath1 = `${dirname}before.yml`;
+  const filepath2 = `${dirname}after.yml`;
+  expect(genDiff(filepath1, filepath2)).toEqual(result);
+});
+
+test('gendiff ini', () => {
+  const filepath1 = `${dirname}before.ini`;
+  const filepath2 = `${dirname}after.ini`;
   expect(genDiff(filepath1, filepath2)).toEqual(result);
 });
