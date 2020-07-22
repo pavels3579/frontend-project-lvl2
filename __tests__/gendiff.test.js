@@ -22,8 +22,8 @@ beforeEach(() => {
 });
 
 test('gendiff json', () => {
-  const filepath1 = `${dirname}before.json`;
-  const filepath2 = `${dirname}after.json`;
+  const filepath1 = `${dirname}before2.json`;
+  const filepath2 = `${dirname}after2.json`;
   expect(genDiff(filepath1, filepath2)).toEqual(result);
 });
 

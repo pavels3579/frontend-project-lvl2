@@ -3,8 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import ini from 'ini';
-import getParsing from './parsers.js';
-
+import getStylish from './stylish.js';
 
 const getpath = (filePath) => {
   const workingDirectory = process.cwd();
@@ -42,7 +41,7 @@ const getdiff = (filepath1, filepath2) => {
   const obj1 = getQbject(path1);
   const obj2 = getQbject(path2);
 
-  return getParsing(obj1, obj2);
+  return getStylish(obj1, obj2);
 };
 
 export default getdiff;
