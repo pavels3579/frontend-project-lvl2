@@ -1,12 +1,17 @@
 import { test, expect } from '@jest/globals';
+import fs from 'fs';
+import os from 'os';
 import genDiff from '../src/getdiff.js';
 
-let result;
+let result
+let result_tree;
 let dirname;
 
 beforeEach(() => {
-  const newLine = '\r\n';
-  result = [
+  // const newLine = '\n';
+  const newLine = os.EOL;
+
+  const result0= [
     '{',
     '    host: hexlet.io',
     '  + timeout: 20',
@@ -19,6 +24,17 @@ beforeEach(() => {
 
   dirname = `${process.cwd()}/__fixtures__/`;
   // console.log('1', __dirname);
+
+  result = fs.readFileSync(`${dirname}test_result2`, 'utf-8');
+  result_tree = fs.readFileSync(`${dirname}test_result`, 'utf-8');
+  // const content = fs.readFileSync(filePath, 'utf-8');
+  //console.log('result: ', result);
+});
+
+test('gendiff json tree', () => {
+  const filepath1 = `${dirname}before.json`;
+  const filepath2 = `${dirname}after.json`;
+  expect(genDiff(filepath1, filepath2)).toEqual(result_tree);
 });
 
 test('gendiff json', () => {

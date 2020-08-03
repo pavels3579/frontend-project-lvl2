@@ -1,10 +1,11 @@
 import getParsing from './parsers.js';
+import os from 'os';
 
 const getStylish = (obj1, obj2) => {
   const data = getParsing(obj1, obj2);
 
   const indent = '  ';
-  const newLine = '\r\n';
+  const newLine = os.EOL;
 
   const result = data.reduce((acc, el) => {
     if (el.after === el.before) {
