@@ -5,41 +5,74 @@ const getStylish = (obj1, obj2) => {
   const data = getParsing(obj1, obj2);
   // console.log('data: ', data);
 
-  const indent = '  ';
+  const indent = '    ';
   const newLine = os.EOL;
+  const res = [];
+  const level = 1;
 
-  const result = data.reduce((acc, el) => {
+  const getResult = (data, level) => {
 
-    if (el.type === 'unchanged') {
-      acc.push(`${indent}${indent}${el.name}: ${el.value[0]}`);
+    const result = data.reduce((acc, el) => {
+      const newIndent = indent.repeat(level);
+      const newIndentSign = indent.repeat(level - 1);
+      if (el.children.length > 0) {
+        if (el.type === 'unchanged') {
+          res.push(`${newIndent}${el.name}: {`);
+        } else if (el.type === 'changed') {
+          res.push(`${newIndentSign}  + ${el.name}: {`);
+        } else if (el.type === 'added') {
+          res.push(`${newIndentSign}  + ${el.name}: {`);
+        } else if (el.type === 'deleted') {
+          res.push(`${newIndentSign}  - ${el.name}: {`);
+        }
+
+
+        const temp = getResult(el.children, level + 1);
+        // console.log('temp: ', temp);
+        return temp;
+      }
+
+
+      if (el.type === 'unchanged') {
+        acc.push(`${newIndent}${el.name}: ${el.value[0]}`);
+        return acc;
+      }
+
+      if (el.type === 'changed') {
+        acc.push(`${newIndentSign}  + ${el.name}: ${el.value[1]}`);
+        acc.push(`${newIndentSign}  - ${el.name}: ${el.value[0]}`);
+        return acc;
+      }
+
+      if (el.type === 'added') {
+        // console.log('acc1: ', acc);
+        acc.push(`${newIndentSign}  + ${el.name}: ${el.value[0]}`);
+        return acc;
+      }
+
+      if (el.type === 'deleted') {
+        acc.push(`${newIndentSign}  - ${el.name}: ${el.value[0]}`);
+        return acc;
+      }
+
       return acc;
-    }
+    }, res);
 
-    if (el.type === 'changed') {
-      acc.push(`  + ${el.name}: ${el.value[1]}`);
-      acc.push(`  - ${el.name}: ${el.value[0]}`);
-      return acc;
-    }
 
-    if (el.type === 'added') {
-      acc.push(`  + ${el.name}: ${el.value[0]}`);
-      return acc;
-    }
 
-    if (el.type === 'deleted') {
-      acc.push(`  - ${el.name}: ${el.value[0]}`);
-      return acc;
-    }
+    // console.log('result: ', result);
 
-    return acc;
-  }, []);
+    return result;
+  };
 
-  result.unshift('{');
-  result.push('}');
+  const tree = getResult(data, level);
+  tree.unshift('{');
+  tree.push('}');
+  // console.log('tree', tree);
 
-  // console.log('result: ', result);
 
-  return result.join(newLine);
+  return tree.join(newLine);
+
 };
 
 export default getStylish;
