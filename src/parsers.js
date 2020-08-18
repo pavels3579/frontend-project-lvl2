@@ -11,15 +11,20 @@ const getParsing = (object1, object2) => {
     const newObj = {};
     if (_.has(obj1, el) && _.has(obj2, el)) {
       newObj.type = obj1[el] === obj2[el] ? 'unchanged' : 'changed';
-    } else if (_.has(obj2, el)) {
-      newObj.type = 'added';
     } else {
-      newObj.type = 'deleted';
+      if (_.has(obj2, el)) {
+        newObj.type = 'added';
+      }
+
+      if (_.has(obj1, el)) {
+        newObj.type = 'deleted';
+      }
     }
 
     newObj.name = el;
 
-    if (obj1[el] instanceof Object || obj2[el] instanceof Object) {
+    if (obj1[el] instanceof Object && obj2[el] instanceof Object) {
+      newObj.type = 'unchanged';
       const children = getParsing(obj1[el], obj2[el]);
       newObj.children = children;
       newObj.value = '';
@@ -43,7 +48,7 @@ const getParsing = (object1, object2) => {
     return acc;
   }, []);
 
-  // console.log('result: ', result);
+   // console.log('result: ', result);
 
   return result;
 };

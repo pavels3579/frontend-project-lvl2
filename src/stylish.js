@@ -1,6 +1,27 @@
 import getParsing from './parsers.js';
 import os from 'os';
 
+const seeObject = (obj, res, level) => {
+  const indent = '    ';
+  const newIndent = indent.repeat(level);
+  const newIndentSign = indent.repeat(level - 1);
+
+  const keys = Object.keys(obj);
+
+  const result = keys.reduce((acc, el) => {
+    if (obj[el] instanceof Object) {
+      acc.push(`${newIndent}${el}: {`);
+      return seeObject(obj[el], acc, level + 1);
+    }
+
+    acc.push(`${newIndent}${el}: ${obj[el]}`);
+    return acc;
+  }, res);
+
+  return result;
+};
+
+
 const getStylish = (obj1, obj2) => {
   const data = getParsing(obj1, obj2);
   // console.log('data: ', data);
@@ -20,16 +41,30 @@ const getStylish = (obj1, obj2) => {
           res.push(`${newIndent}${el.name}: {`);
         } else if (el.type === 'changed') {
           res.push(`${newIndentSign}  + ${el.name}: {`);
-        } else if (el.type === 'added') {
-          res.push(`${newIndentSign}  + ${el.name}: {`);
         } else if (el.type === 'deleted') {
           res.push(`${newIndentSign}  - ${el.name}: {`);
+        } else if (el.type === 'added') {
+          res.push(`${newIndentSign}  + ${el.name}: {`);
         }
-
 
         const temp = getResult(el.children, level + 1);
         // console.log('temp: ', temp);
         return temp;
+      }
+
+      if (el.value[0] instanceof Object) {
+        // acc.push(`${newIndent}${el.name}: {`);
+        if (el.type === 'unchanged') {
+          acc.push(`${newIndent}${el.name}: {`);
+        } else if (el.type === 'changed') {
+          acc.push(`${newIndentSign}  + ${el.name}: {`);
+        } else if (el.type === 'deleted') {
+          acc.push(`${newIndentSign}  - ${el.name}: {`);
+        } else if (el.type === 'added') {
+          acc.push(`${newIndentSign}  + ${el.name}: {`);
+        }
+
+        return seeObject(el.value[0], acc, level + 1);
       }
 
 
@@ -39,7 +74,12 @@ const getStylish = (obj1, obj2) => {
       }
 
       if (el.type === 'changed') {
+        acc.push(`${newIndentSign}  - ${el.name}: ${el.value[0]}`);
         acc.push(`${newIndentSign}  + ${el.name}: ${el.value[1]}`);
+        return acc;
+      }
+
+      if (el.type === 'deleted') {
         acc.push(`${newIndentSign}  - ${el.name}: ${el.value[0]}`);
         return acc;
       }
@@ -50,15 +90,8 @@ const getStylish = (obj1, obj2) => {
         return acc;
       }
 
-      if (el.type === 'deleted') {
-        acc.push(`${newIndentSign}  - ${el.name}: ${el.value[0]}`);
-        return acc;
-      }
-
       return acc;
     }, res);
-
-
 
     // console.log('result: ', result);
 
@@ -66,9 +99,10 @@ const getStylish = (obj1, obj2) => {
   };
 
   const tree = getResult(data, level);
+  // console.log('tree', tree);
   tree.unshift('{');
   tree.push('}');
-  // console.log('tree', tree);
+   console.log('tree', tree);
 
 
   return tree.join(newLine);
