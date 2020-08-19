@@ -25,7 +25,7 @@ beforeEach(() => {
   dirname = `${process.cwd()}/__fixtures__/`;
   // console.log('1', __dirname);
 
-  result = fs.readFileSync(`${dirname}test_result2`, 'utf-8');
+  result = fs.readFileSync(`${dirname}test_result3`, 'utf-8');
   result_tree = fs.readFileSync(`${dirname}test_result`, 'utf-8');
   // const content = fs.readFileSync(filePath, 'utf-8');
   //console.log('result: ', result);

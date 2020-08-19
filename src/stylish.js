@@ -1,7 +1,7 @@
 import getParsing from './parsers.js';
 import os from 'os';
 
-const seeObject = (obj, res, level) => {
+const addObject = (obj, res, level) => {
   const indent = '    ';
   const newIndent = indent.repeat(level);
   const newIndentSign = indent.repeat(level - 1);
@@ -11,10 +11,11 @@ const seeObject = (obj, res, level) => {
   const result = keys.reduce((acc, el) => {
     if (obj[el] instanceof Object) {
       acc.push(`${newIndent}${el}: {`);
-      return seeObject(obj[el], acc, level + 1);
+      return addObject(obj[el], acc, level + 1);
     }
 
     acc.push(`${newIndent}${el}: ${obj[el]}`);
+    acc.push(`${newIndentSign}}`);
     return acc;
   }, res);
 
@@ -36,7 +37,7 @@ const getStylish = (obj1, obj2) => {
     const result = data.reduce((acc, el) => {
       const newIndent = indent.repeat(level);
       const newIndentSign = indent.repeat(level - 1);
-      if (el.children.length > 0) {
+      if (el.children.length) {
         if (el.type === 'unchanged') {
           res.push(`${newIndent}${el.name}: {`);
         } else if (el.type === 'changed') {
@@ -48,12 +49,12 @@ const getStylish = (obj1, obj2) => {
         }
 
         const temp = getResult(el.children, level + 1);
+        temp.push(`${newIndent}}`);
         // console.log('temp: ', temp);
         return temp;
       }
 
       if (el.value[0] instanceof Object) {
-        // acc.push(`${newIndent}${el.name}: {`);
         if (el.type === 'unchanged') {
           acc.push(`${newIndent}${el.name}: {`);
         } else if (el.type === 'changed') {
@@ -64,7 +65,7 @@ const getStylish = (obj1, obj2) => {
           acc.push(`${newIndentSign}  + ${el.name}: {`);
         }
 
-        return seeObject(el.value[0], acc, level + 1);
+        return addObject(el.value[0], acc, level + 1);
       }
 
 
