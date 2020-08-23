@@ -1,4 +1,4 @@
-import getParsing from './parsers.js';
+import getParsing from '../parsers.js';
 import os from 'os';
 
 const addObject = (obj, res, level) => {
@@ -21,23 +21,6 @@ const addObject = (obj, res, level) => {
 
   return result;
 };
-
-const addRow = (type, name, value0, value1, children, newIndent, newIndentAndSign) => {
-  if (children.length) {
-      if (type === 'unchanged') {
-        acc.push(`${newIndent}${el.name}: {`);
-      } else if (el.type === 'changed') {
-        acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-      } else if (el.type === 'deleted') {
-        acc.push(`${newIndentAndSign}  - ${el.name}: {`);
-      } else if (el.type === 'added') {
-        acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-      }
-  }
-
-  return acc;
-};
-
 
 const getStylish = (obj1, obj2) => {
   const data = getParsing(obj1, obj2);

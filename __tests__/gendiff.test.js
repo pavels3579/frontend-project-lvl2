@@ -6,29 +6,17 @@ import genDiff from '../src/getdiff.js';
 let result
 let result_tree;
 let dirname;
+let plain;
 
 beforeEach(() => {
-  // const newLine = '\n';
-  const newLine = os.EOL;
-
-  const result0= [
-    '{',
-    '    host: hexlet.io',
-    '  + timeout: 20',
-    '  - timeout: 50',
-    '  - proxy: 123.234.53.22',
-    '  - follow: false',
-    '  + verbose: true',
-    '}',
-  ].join(newLine);
-
   dirname = `${process.cwd()}/__fixtures__/`;
   // console.log('1', __dirname);
 
   result = fs.readFileSync(`${dirname}test_result3`, 'utf-8');
   result_tree = fs.readFileSync(`${dirname}test_result`, 'utf-8');
-  // const content = fs.readFileSync(filePath, 'utf-8');
   //console.log('result: ', result);
+  plain = fs.readFileSync(`${dirname}plain`, 'utf-8');
+
 });
 
 test('gendiff json tree', () => {
@@ -53,4 +41,10 @@ test('gendiff ini', () => {
   const filepath1 = `${dirname}before.ini`;
   const filepath2 = `${dirname}after.ini`;
   expect(genDiff(filepath1, filepath2)).toEqual(result);
+});
+
+test('gendiff plain', () => {
+  const filepath1 = `${dirname}before.json`;
+  const filepath2 = `${dirname}after.json`;
+  expect(genDiff(filepath1, filepath2, 'plain')).toEqual(plain);
 });

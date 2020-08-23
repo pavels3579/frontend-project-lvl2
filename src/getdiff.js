@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import ini from 'ini';
-import getStylish from './stylish.js';
+import getFormat from './formatters/index.js';
 
 const getpath = (filePath) => {
   const workingDirectory = process.cwd();
@@ -42,9 +42,7 @@ const getdiff = (filepath1, filepath2, format = 'stylish') => {
   const obj2 = getQbject(path2);
   console.log('f: ', format);
 
-  if (format === 'stylish') {
-    return getStylish(obj1, obj2);
-  }
+  return getFormat(obj1, obj2, format);
 };
 
 export default getdiff;
