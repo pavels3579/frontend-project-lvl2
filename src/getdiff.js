@@ -40,7 +40,7 @@ const getdiff = (filepath1, filepath2, format = 'stylish') => {
 
   const obj1 = getQbject(path1);
   const obj2 = getQbject(path2);
-  console.log('f: ', format);
+  // console.log('f: ', format);
 
   return getFormat(obj1, obj2, format);
 };
