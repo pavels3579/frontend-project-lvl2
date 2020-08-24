@@ -13,7 +13,7 @@ const genDiff = program
     (filepath1, filepath2) => {
       // console.log('ff: ', program.format);
       console.log(getDiff(filepath1, filepath2, program.format));
-    }
+    },
   );
 
 program.parse(process.argv);

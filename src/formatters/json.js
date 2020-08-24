@@ -22,7 +22,7 @@ const addObject = (obj, res, level) => {
   return result;
 };
 
-const getStylish = (obj1, obj2) => {
+const getJSON = (obj1, obj2) => {
   const startData = getParsing(obj1, obj2);
   // console.log('data: ', data);
 
@@ -36,23 +36,17 @@ const getStylish = (obj1, obj2) => {
       const newIndent = indent.repeat(level);
       const newIndentAndSign = indent.repeat(level - 1);
       if (el.children.length) {
-        if (el.type === 'unchanged') {
-          acc.push(`${newIndent}${el.name}: {`);
-        } else if (el.type === 'changed') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-        } else if (el.type === 'deleted') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: {`);
-        } else if (el.type === 'added') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-        }
+        acc.push(`{'type': ${el.type}},`);
+        acc.push(`${el.name}: {`);
 
         const temp = getResult(el.children, level + 1);
-        temp.push(`${newIndent}}`);
+        temp.push('},');
         // console.log('temp: ', temp);
         return temp;
       }
 
       if (el.value[0] instanceof Object) {
+        acc.push(`{'type': ${el.type}},`);
         if (el.type === 'unchanged') {
           acc.push(`${newIndent}${el.name}: {`);
         } else if (el.type === 'changed') {
@@ -127,4 +121,4 @@ const getStylish = (obj1, obj2) => {
   return tree.join(newLine);
 };
 
-export default getStylish;
+export default getJSON;

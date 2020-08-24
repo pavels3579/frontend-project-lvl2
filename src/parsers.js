@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 const getParsing = (object1, object2) => {
-
   const obj1 = object1 instanceof Object ? object1 : {};
   const obj2 = object2 instanceof Object ? object2 : {};
 
@@ -41,14 +40,12 @@ const getParsing = (object1, object2) => {
     }
 
     newObj.children = [];
-    // newObj.value = _.has(obj1, el) ? obj1[el] : obj2[el];
-
     acc.push(newObj);
 
     return acc;
   }, []);
 
-   // console.log('result: ', result);
+  // console.log('result: ', result);
 
   return result;
 };
