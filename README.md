@@ -32,6 +32,7 @@ INI
 
 ```sh
 gendiff ./__fixtures__/before.ini ./__fixtures__/after.ini
+```
 
 
 
@@ -39,5 +40,6 @@ YML
 
 ```sh
 gendiff ./__fixtures__/before.yml ./__fixtures__/after.yml
+```
 
 
