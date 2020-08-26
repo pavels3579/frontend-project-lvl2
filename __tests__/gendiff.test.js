@@ -10,9 +10,8 @@ let json;
 
 beforeEach(() => {
   dirname = `${process.cwd()}/__fixtures__/`;
-  // console.log('1', __dirname);
 
-  result = fs.readFileSync(`${dirname}test_result3`, 'utf-8');
+  result = fs.readFileSync(`${dirname}test_result2`, 'utf-8');
   resultTree = fs.readFileSync(`${dirname}test_result`, 'utf-8');
   // console.log('result: ', result);
   plain = fs.readFileSync(`${dirname}plain`, 'utf-8');

@@ -3,7 +3,6 @@ import getParsing from '../parsers.js';
 
 const getPlain = (obj1, obj2) => {
   const startData = getParsing(obj1, obj2);
-  // console.log('data: ', data);
 
   const newLine = os.EOL;
   const res = [];
@@ -13,9 +12,8 @@ const getPlain = (obj1, obj2) => {
     const result = data.reduce((acc, el) => {
       if (el.children.length) {
         const parentName = parent === '' ? el.name : `${parent}.${el.name}`;
-
         const temp = getResult(el.children, parentName);
-        // console.log('temp: ', temp);
+
         return temp;
       }
 
@@ -63,17 +61,11 @@ const getPlain = (obj1, obj2) => {
       return acc;
     }, res);
 
-    // console.log('res: ', res);
-
     return result;
   };
 
   const tree = getResult(startData, stertParent);
-  // console.log('tree', tree);
-  // console.log('tree1', tree);
   tree.sort();
-
-  // console.log('tree2', tree);
 
   return tree.join(newLine);
 };

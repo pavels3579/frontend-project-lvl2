@@ -1,4 +1,3 @@
-// const program = require('commander');
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';

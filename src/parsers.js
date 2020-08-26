@@ -45,8 +45,6 @@ const getParsing = (object1, object2) => {
     return acc;
   }, []);
 
-  // console.log('result: ', result);
-
   return result;
 };
 

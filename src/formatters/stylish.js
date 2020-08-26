@@ -24,7 +24,6 @@ const addObject = (obj, res, level) => {
 
 const getStylish = (obj1, obj2) => {
   const startData = getParsing(obj1, obj2);
-  // console.log('data: ', data);
 
   const indent = '    ';
   const newLine = os.EOL;
@@ -48,7 +47,7 @@ const getStylish = (obj1, obj2) => {
 
         const temp = getResult(el.children, level + 1);
         temp.push(`${newIndent}}`);
-        // console.log('temp: ', temp);
+
         return temp;
       }
 
@@ -105,7 +104,6 @@ const getStylish = (obj1, obj2) => {
       }
 
       if (el.type === 'added') {
-        // console.log('acc1: ', acc);
         acc.push(`${newIndentAndSign}  + ${el.name}: ${el.value[0]}`);
         return acc;
       }
@@ -113,16 +111,13 @@ const getStylish = (obj1, obj2) => {
       return acc;
     }, res);
 
-    // console.log('result: ', result);
-
     return result;
   };
 
   const tree = getResult(startData, startLevel);
-  // console.log('tree', tree);
   tree.unshift('{');
   tree.push('}');
-  console.log('tree', tree);
+  // console.log('tree', tree);
 
   return tree.join(newLine);
 };
