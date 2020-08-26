@@ -6,3 +6,38 @@
 
 
 Second Hexlet's JavaScrpt project
+
+# Difference generator
+
+## Setup
+
+```sh
+$ make install
+$ make publish
+sudo npm link
+```
+
+<a href="https://asciinema.org/a/JHA7bWRpsO2ji5u1m58UVphL5" target="_blank"><img src="https://asciinema.org/a/JHA7bWRpsO2ji5u1m58UVphL5.svg" /></a>
+
+## Comparing simple files
+
+JSON
+
+```sh
+gendiff ./__fixtures__/before2.json ./__fixtures__/after2.json
+```
+
+
+INI
+
+```sh
+gendiff ./__fixtures__/before.ini ./__fixtures__/after.ini
+
+
+
+YML
+
+```sh
+gendiff ./__fixtures__/before.yml ./__fixtures__/after.yml
+
+

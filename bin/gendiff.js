@@ -18,5 +18,4 @@ const genDiff = program
 
 program.parse(process.argv);
 
-// console.log(diff);
 export default genDiff;
