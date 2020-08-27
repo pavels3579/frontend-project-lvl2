@@ -17,7 +17,7 @@ $ make publish
 sudo npm link
 ```
 
-<a href="https://asciinema.org/a/JHA7bWRpsO2ji5u1m58UVphL5" target="_blank"><img src="https://asciinema.org/a/JHA7bWRpsO2ji5u1m58UVphL5.svg" /></a>
+<a href="https://asciinema.org/a/QY9A9m1tFgGnBGY1LxUt9lGCm" target="_blank"><img src="https://asciinema.org/a/QY9A9m1tFgGnBGY1LxUt9lGCm.svg" /></a>
 
 ## Comparing simple files
 
@@ -27,6 +27,7 @@ JSON
 gendiff ./__fixtures__/before2.json ./__fixtures__/after2.json
 ```
 
+<a href="https://asciinema.org/a/k2HimPBcAeWW7WUTKdGHUFr52" target="_blank"><img src="https://asciinema.org/a/k2HimPBcAeWW7WUTKdGHUFr52.svg" /></a>
 
 INI
 
@@ -34,7 +35,7 @@ INI
 gendiff ./__fixtures__/before.ini ./__fixtures__/after.ini
 ```
 
-
+<a href="https://asciinema.org/a/6fPWE5bRFefdqsFU6GoRItBdg" target="_blank"><img src="https://asciinema.org/a/6fPWE5bRFefdqsFU6GoRItBdg.svg" /></a>
 
 YML
 
@@ -42,4 +43,30 @@ YML
 gendiff ./__fixtures__/before.yml ./__fixtures__/after.yml
 ```
 
+<a href="https://asciinema.org/a/FJD7NDqk9i0VTvFRvvIco97XG" target="_blank"><img src="https://asciinema.org/a/FJD7NDqk9i0VTvFRvvIco97XG.svg" /></a>
 
+
+## Comparing complex files
+
+```sh
+gendiff ./__fixtures__/before.json ./__fixtures__/after.json
+```
+
+<a href="https://asciinema.org/a/qenGtOIgyGiG8gRIUHy2O5k2q" target="_blank"><img src="https://asciinema.org/a/qenGtOIgyGiG8gRIUHy2O5k2q.svg" /></a>
+
+
+## Comparing files with different formats
+
+```sh
+gendiff --format stylish ./__fixtures__/before.json ./__fixtures__/after.json
+```
+
+```sh
+gendiff --format plain ./__fixtures__/before.json ./__fixtures__/after.json
+```
+
+```sh
+gendiff --format json ./__fixtures__/before.json ./__fixtures__/after.json
+```
+
+<a href="https://asciinema.org/a/X66RZ3EJCmowWal335VF6oppx" target="_blank"><img src="https://asciinema.org/a/X66RZ3EJCmowWal335VF6oppx.svg" /></a>
