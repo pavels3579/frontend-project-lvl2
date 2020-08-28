@@ -1,8 +1,8 @@
 install:
-	  npm install
+	  npm ci
 
 test:
-	  npm test
+	  npm test --watch
 
 publish:
 	  npm publish  --dry-run
