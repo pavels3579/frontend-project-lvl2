@@ -9,6 +9,10 @@ Second Hexlet's JavaScrpt project
 
 # Difference generator
 
+## Requirements
+
+- Node.js 14
+
 ## Setup
 
 ```sh
