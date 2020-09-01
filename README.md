@@ -9,6 +9,11 @@ Second Hexlet's JavaScrpt project
 
 # Difference generator
 
+## Description
+
+The utilite compare two files and generate the difference.
+Support formattes: json, ini, yml.
+
 ## Requirements
 
 - Node.js 14
