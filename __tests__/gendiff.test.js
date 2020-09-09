@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals';
 import fs from 'fs';
-import genDiff from '../src/getdiff.js';
+// import dirname from 'path';
+import genDiff from '../src/index.js';
 
 let resultFlat;
 let resultTree;
@@ -8,7 +9,7 @@ let dirname;
 let plain;
 let json;
 
-beforeEach(() => {
+beforeAll(() => {
   dirname = `${process.cwd()}/__fixtures__/`;
 
   resultFlat = fs.readFileSync(`${dirname}result_flat`, 'utf-8');
