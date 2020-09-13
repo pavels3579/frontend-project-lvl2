@@ -7,8 +7,6 @@ import getContent from '../src/getContent.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// console.log('__dirname5: ', __dirname);
-
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 let resultFlat;
