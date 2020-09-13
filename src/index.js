@@ -1,8 +1,8 @@
-import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import ini from 'ini';
 import getFormat from './formatters/index.js';
+import getContent from './getContent.js';
 
 const getpath = (filePath) => {
   const workingDirectory = process.cwd();
@@ -16,7 +16,7 @@ const getpath = (filePath) => {
 };
 
 const getQbject = (filePath) => {
-  const content = fs.readFileSync(filePath, 'utf-8');
+  const content = getContent(filePath);
 
   if (path.extname(filePath) === '.json') {
     return JSON.parse(content);
