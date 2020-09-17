@@ -2,7 +2,7 @@
   "name": "@pavels3579/frontend-project-lvl2",
   "version": "1.0.0",
   "description": "Difference generator",
-  "main": "src/index.js",
+  "main": "index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },

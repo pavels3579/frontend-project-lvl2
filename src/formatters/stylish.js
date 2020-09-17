@@ -117,7 +117,6 @@ const getStylish = (obj1, obj2) => {
   const tree = getResult(startData, startLevel);
   tree.unshift('{');
   tree.push('}');
-  // console.log('tree', tree);
 
   return tree.join(newLine);
 };
