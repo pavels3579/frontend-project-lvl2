@@ -4,7 +4,7 @@ import ini from 'ini';
 import formatData from './src/formatters/index.js';
 import getContent from './src/getContent.js';
 
-const getpath = (pathToFile) => {
+const getPath = (pathToFile) => {
   // const fullPath = path.resolve(pathToFile, process.cwd());
   const workingDirectory = process.cwd();
   let fullPath = pathToFile;
@@ -16,27 +16,27 @@ const getpath = (pathToFile) => {
   return fullPath;
 };
 
-const getData = (filePath) => {
-  const content = getContent(filePath);
+const getData = (pathToFile) => {
+  const content = getContent(pathToFile);
 
-  if (path.extname(filePath) === '.json') {
+  if (path.extname(pathToFile) === '.json') {
     return JSON.parse(content);
   }
 
-  if (path.extname(filePath) === '.yml') {
+  if (path.extname(pathToFile) === '.yml') {
     return yaml.safeLoad(content);
   }
 
-  if (path.extname(filePath) === '.ini') {
+  if (path.extname(pathToFile) === '.ini') {
     return ini.parse(content);
   }
 
-  return {};
+  throw new Error('Unknown file format.');
 };
 
 const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
-  const path1 = getpath(pathToFile1);
-  const path2 = getpath(pathToFile2);
+  const path1 = getPath(pathToFile1);
+  const path2 = getPath(pathToFile2);
 
   const data1 = getData(path1);
   const data2 = getData(path2);

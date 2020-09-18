@@ -1,5 +1,5 @@
 import fs from 'fs';
 
-const getContent = (fullFilename) => fs.readFileSync(fullFilename, 'utf-8');
+const getContent = (fullPath) => fs.readFileSync(fullPath, 'utf-8');
 
 export default getContent;

@@ -2,7 +2,7 @@ install:
 	  npm ci
 
 test:
-	  npm test --watch
+	  npm test --watchAll
 
 publish:
 	  npm publish  --dry-run
