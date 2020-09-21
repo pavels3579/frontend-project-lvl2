@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getParsing = (object1, object2) => {
+const getAST = (object1, object2) => {
   const obj1 = object1 instanceof Object ? object1 : {};
   const obj2 = object2 instanceof Object ? object2 : {};
 
@@ -24,7 +24,7 @@ const getParsing = (object1, object2) => {
 
     if (obj1[el] instanceof Object && obj2[el] instanceof Object) {
       newObj.type = 'unchanged';
-      const children = getParsing(obj1[el], obj2[el]);
+      const children = getAST(obj1[el], obj2[el]);
       newObj.children = children;
       newObj.value = '';
       acc.push(newObj);
@@ -48,4 +48,4 @@ const getParsing = (object1, object2) => {
   return result;
 };
 
-export default getParsing;
+export default getAST;

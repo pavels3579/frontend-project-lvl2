@@ -1,5 +1,3 @@
-import getParsing from '../parsers.js';
-
 const addObject = (obj, res) => {
   const keys = Object.keys(obj);
 
@@ -19,8 +17,7 @@ const addObject = (obj, res) => {
   return result;
 };
 
-const getJSON = (obj1, obj2) => {
-  const startData = getParsing(obj1, obj2);
+const getJSON = (AST) => {
   const res = [];
 
   const getResult = (data) => {
@@ -106,7 +103,7 @@ const getJSON = (obj1, obj2) => {
     return result;
   };
 
-  const tree = getResult(startData);
+  const tree = getResult(AST);
 
   const tempResult = tree.join('').split('');
   tempResult.pop();

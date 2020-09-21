@@ -2,18 +2,18 @@ import getStylish from './stylish.js';
 import getPlain from './plain.js';
 import getJSON from './json.js';
 
-export default (data1, data2, format) => {
+export default (AST, format) => {
   if (format === 'stylish') {
-    return getStylish(data1, data2);
+    return getStylish(AST);
   }
 
   if (format === 'plain') {
-    return getPlain(data1, data2);
+    return getPlain(AST);
   }
 
   if (format === 'json') {
-    return getJSON(data1, data2);
+    return getJSON(AST);
   }
 
-  return getStylish(data1, data2);
+  return getStylish(AST);
 };

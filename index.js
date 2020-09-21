@@ -3,6 +3,7 @@ import yaml from 'js-yaml';
 import ini from 'ini';
 import formatData from './src/formatters/index.js';
 import getContent from './src/getContent.js';
+import getAST from './src/getAST.js';
 
 const getPath = (pathToFile) => {
   // const fullPath = path.resolve(pathToFile, process.cwd());
@@ -41,7 +42,9 @@ const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
   const data1 = getData(path1);
   const data2 = getData(path2);
 
-  return formatData(data1, data2, format);
+  const AST = getAST(data1, data2);
+
+  return formatData(AST, format);
 };
 
 export default genDiff;

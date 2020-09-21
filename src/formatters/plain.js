@@ -1,10 +1,6 @@
-import os from 'os';
-import getParsing from '../parsers.js';
+import EndOfLine from '../getEOL.js';
 
-const getPlain = (obj1, obj2) => {
-  const startData = getParsing(obj1, obj2);
-
-  const newLine = os.EOL;
+const getPlain = (AST) => {
   const res = [];
   const stertParent = '';
 
@@ -64,10 +60,10 @@ const getPlain = (obj1, obj2) => {
     return result;
   };
 
-  const tree = getResult(startData, stertParent);
+  const tree = getResult(AST, stertParent);
   tree.sort();
 
-  return tree.join(newLine);
+  return tree.join(EndOfLine);
 };
 
 export default getPlain;

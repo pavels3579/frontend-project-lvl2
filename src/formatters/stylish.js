@@ -1,5 +1,4 @@
-import os from 'os';
-import getParsing from '../parsers.js';
+import EndOfLine from '../getEOL.js';
 
 const addObject = (obj, res, level) => {
   const indent = '    ';
@@ -22,11 +21,8 @@ const addObject = (obj, res, level) => {
   return result;
 };
 
-const getStylish = (obj1, obj2) => {
-  const startData = getParsing(obj1, obj2);
-
+const getStylish = (AST) => {
   const indent = '    ';
-  const newLine = os.EOL;
   const res = [];
   const startLevel = 1;
 
@@ -114,11 +110,11 @@ const getStylish = (obj1, obj2) => {
     return result;
   };
 
-  const tree = getResult(startData, startLevel);
+  const tree = getResult(AST, startLevel);
   tree.unshift('{');
   tree.push('}');
 
-  return tree.join(newLine);
+  return tree.join(EndOfLine);
 };
 
 export default getStylish;
