@@ -10,9 +10,9 @@ const getPath = (pathToFile) => {
   const workingDirectory = process.cwd();
   let fullPath = pathToFile;
 
-  if (!fullPath.includes(workingDirectory)) {
-    fullPath = path.resolve(workingDirectory, fullPath);
-  }
+  // if (!fullPath.includes(workingDirectory)) {
+  //  fullPath = path.resolve(workingDirectory, fullPath);
+  // }
 
   return fullPath;
 };

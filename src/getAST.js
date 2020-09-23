@@ -1,30 +1,27 @@
 import _ from 'lodash';
 
-const getAST = (object1, object2) => {
-  const obj1 = object1 instanceof Object ? object1 : {};
-  const obj2 = object2 instanceof Object ? object2 : {};
+const getAST = (data1, data2) => {
+  const keys = _.union([...Object.keys(data1), ...Object.keys(data2)]);
 
-  const keys = _.uniq([...Object.keys(obj1), ...Object.keys(obj2)]);
-
-  const result = keys.reduce((acc, el) => {
+  const result = keys.reduce((acc, key) => {
     const newObj = {};
-    if (_.has(obj1, el) && _.has(obj2, el)) {
-      newObj.type = obj1[el] === obj2[el] ? 'unchanged' : 'changed';
+    if (_.has(data1, key) && _.has(data2, key)) {
+      newObj.type = data1[key] === data2[key] ? 'unchanged' : 'changed';
     } else {
-      if (_.has(obj2, el)) {
+      if (_.has(data2, key)) {
         newObj.type = 'added';
       }
 
-      if (_.has(obj1, el)) {
+      if (_.has(data1, key)) {
         newObj.type = 'deleted';
       }
     }
 
-    newObj.name = el;
+    newObj.name = key;
 
-    if (obj1[el] instanceof Object && obj2[el] instanceof Object) {
+    if (data1[key] instanceof Object && data2[key] instanceof Object) {
       newObj.type = 'unchanged';
-      const children = getAST(obj1[el], obj2[el]);
+      const children = getAST(data1[key], data2[key]);
       newObj.children = children;
       newObj.value = '';
       acc.push(newObj);
@@ -32,11 +29,11 @@ const getAST = (object1, object2) => {
     }
 
     if (newObj.type === 'added') {
-      newObj.value = [obj2[el]];
+      newObj.value = [data2[key]];
     } else if (newObj.type === 'deleted') {
-      newObj.value = [obj1[el]];
+      newObj.value = [data1[key]];
     } else {
-      newObj.value = [obj1[el], obj2[el]];
+      newObj.value = [data1[key], data2[key]];
     }
 
     newObj.children = [];
