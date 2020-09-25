@@ -6,7 +6,7 @@ const getPlain = (AST) => {
 
   const getResult = (data, parent) => {
     const result = data.reduce((acc, el) => {
-      if (el.children.length) {
+      if (el.type === 'nested') {
         const parentName = parent === '' ? el.name : `${parent}.${el.name}`;
         const temp = getResult(el.children, parentName);
 

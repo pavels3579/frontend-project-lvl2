@@ -30,16 +30,9 @@ const getStylish = (AST) => {
     const result = data.reduce((acc, el) => {
       const newIndent = indent.repeat(level);
       const newIndentAndSign = indent.repeat(level - 1);
-      if (el.children.length) {
-        if (el.type === 'unchanged') {
-          acc.push(`${newIndent}${el.name}: {`);
-        } else if (el.type === 'changed') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-        } else if (el.type === 'deleted') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: {`);
-        } else if (el.type === 'added') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
-        }
+
+      if (el.type === 'nested') {
+        acc.push(`${newIndent}${el.name}: {`);
 
         const temp = getResult(el.children, level + 1);
         temp.push(`${newIndent}}`);

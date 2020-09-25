@@ -20,7 +20,7 @@ const getAST = (data1, data2) => {
     newObj.name = key;
 
     if (data1[key] instanceof Object && data2[key] instanceof Object) {
-      newObj.type = 'unchanged';
+      newObj.type = 'nested';
       const children = getAST(data1[key], data2[key]);
       newObj.children = children;
       newObj.value = '';

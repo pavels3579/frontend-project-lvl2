@@ -22,7 +22,7 @@ const getJSON = (AST) => {
 
   const getResult = (data) => {
     const result = data.reduce((acc, el) => {
-      if (el.children.length) {
+      if (el.type === 'nested') {
         acc.push(`{'name': ${el.name}},`);
         acc.push(`{'type': ${el.type}},`);
         acc.push("{'children': [");
