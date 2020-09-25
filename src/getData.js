@@ -5,19 +5,19 @@ import getContent from './getContent.js';
 const getData = (pathToFile, type) => {
   const content = getContent(pathToFile);
 
-  if (type === 'json') {
-    return JSON.parse(content);
-  }
+  switch (type) {
+    case 'json':
+      return JSON.parse(content);
 
-  if (type === 'yaml') {
-    return yaml.safeLoad(content);
-  }
+    case 'yaml':
+      return yaml.safeLoad(content);
 
-  if (type === 'ini') {
-    return ini.parse(content);
-  }
+    case 'ini':
+      return ini.parse(content);
 
-  throw new Error('Unknown file format.');
+    default:
+      throw new Error('Unknown file format.');
+  }
 };
 
 export default getData;

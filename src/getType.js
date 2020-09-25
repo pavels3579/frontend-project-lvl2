@@ -1,19 +1,19 @@
 import path from 'path';
 
 const getType = (pathToFile) => {
-  if (path.extname(pathToFile) === '.json') {
-    return 'json';
-  }
+  switch (path.extname(pathToFile)) {
+    case '.json':
+      return 'json';
 
-  if (path.extname(pathToFile) === '.yml') {
-    return 'yaml';
-  }
+    case '.yml':
+      return 'yaml';
 
-  if (path.extname(pathToFile) === '.ini') {
-    return 'ini';
-  }
+    case '.ini':
+      return 'ini';
 
-  return '';
+    default:
+      return '';
+  }
 };
 
 export default getType;
