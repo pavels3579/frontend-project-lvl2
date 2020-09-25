@@ -1,31 +1,14 @@
-import path from 'path';
-import yaml from 'js-yaml';
-import ini from 'ini';
 import formatData from './src/formatters/index.js';
-import getContent from './src/getContent.js';
 import getAST from './src/getAST.js';
-
-const getData = (pathToFile) => {
-  const content = getContent(pathToFile);
-
-  if (path.extname(pathToFile) === '.json') {
-    return JSON.parse(content);
-  }
-
-  if (path.extname(pathToFile) === '.yml') {
-    return yaml.safeLoad(content);
-  }
-
-  if (path.extname(pathToFile) === '.ini') {
-    return ini.parse(content);
-  }
-
-  throw new Error('Unknown file format.');
-};
+import getType from './src/getType.js';
+import getData from './src/getData.js';
 
 const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
-  const data1 = getData(pathToFile1);
-  const data2 = getData(pathToFile2);
+  const type1 = getType(pathToFile1);
+  const type2 = getType(pathToFile2);
+
+  const data1 = getData(pathToFile1, type1);
+  const data2 = getData(pathToFile2, type2);
 
   const AST = getAST(data1, data2);
 
