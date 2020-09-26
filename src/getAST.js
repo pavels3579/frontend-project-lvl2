@@ -4,40 +4,50 @@ const getAST = (data1, data2) => {
   const keys = _.union([...Object.keys(data1), ...Object.keys(data2)]);
 
   const result = keys.reduce((acc, key) => {
-    const newObj = {};
-    if (_.has(data1, key) && _.has(data2, key)) {
-      newObj.type = data1[key] === data2[key] ? 'unchanged' : 'changed';
-    } else {
-      if (_.has(data2, key)) {
-        newObj.type = 'added';
-      }
-
-      if (_.has(data1, key)) {
-        newObj.type = 'deleted';
-      }
-    }
-
-    newObj.name = key;
+    const name = key;
 
     if (data1[key] instanceof Object && data2[key] instanceof Object) {
-      newObj.type = 'nested';
+      const type = 'nested';
       const children = getAST(data1[key], data2[key]);
-      newObj.children = children;
-      newObj.value = '';
-      acc.push(newObj);
+      const value = '';
+      acc.push({
+        name, type, children, value,
+      });
+
       return acc;
     }
 
-    if (newObj.type === 'added') {
-      newObj.value = [data2[key]];
-    } else if (newObj.type === 'deleted') {
-      newObj.value = [data1[key]];
-    } else {
-      newObj.value = [data1[key], data2[key]];
+    const children = [];
+
+    if (_.has(data1, key) && _.has(data2, key)) {
+      const type = data1[key] === data2[key] ? 'unchanged' : 'changed';
+      const value = [data1[key], data2[key]];
+      acc.push({
+        name, type, children, value,
+      });
+
+      return acc;
     }
 
-    newObj.children = [];
-    acc.push(newObj);
+    if (_.has(data2, key)) {
+      const type = 'added';
+      const value = [data2[key]];
+      acc.push({
+        name, type, children, value,
+      });
+
+      return acc;
+    }
+
+    if (_.has(data1, key)) {
+      const type = 'deleted';
+      const value = [data1[key]];
+      acc.push({
+        name, type, children, value,
+      });
+
+      return acc;
+    }
 
     return acc;
   }, []);
