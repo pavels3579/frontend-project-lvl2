@@ -9,7 +9,7 @@ const getData = (pathToFile, type) => {
     case 'json':
       return JSON.parse(content);
 
-    case 'yaml':
+    case 'yml':
       return yaml.safeLoad(content);
 
     case 'ini':

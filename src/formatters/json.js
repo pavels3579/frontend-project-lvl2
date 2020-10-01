@@ -3,12 +3,12 @@ const addObject = (obj, res) => {
 
   const result = keys.reduce((acc, el) => {
     if (obj[el] instanceof Object) {
-      acc.push(`{'name': ${el}},`);
+      acc.push(`{'key': ${el}},`);
 
       return addObject(obj[el], acc);
     }
 
-    acc.push(`{'name': ${el}},`);
+    acc.push(`{'key': ${el}},`);
     acc.push(`{'value': ${obj[el]}}`);
 
     return acc;
@@ -23,7 +23,7 @@ const getJSON = (AST) => {
   const getResult = (data) => {
     const result = data.reduce((acc, el) => {
       if (el.type === 'nested') {
-        acc.push(`{'name': ${el.name}},`);
+        acc.push(`{'key': ${el.key}},`);
         acc.push(`{'type': ${el.type}},`);
         acc.push("{'children': [");
 
@@ -34,7 +34,7 @@ const getJSON = (AST) => {
       }
 
       if (el.value[0] instanceof Object) {
-        acc.push(`{'name': ${el.name}},`);
+        acc.push(`{'key': ${el.key}},`);
         acc.push(`{'type': ${el.type}},`);
 
         if (el.type === 'changed') {
@@ -56,7 +56,7 @@ const getJSON = (AST) => {
       }
 
       if (el.value[1] instanceof Object) {
-        acc.push(`{'name': ${el.name}},`);
+        acc.push(`{'key': ${el.key}},`);
         acc.push(`{'type': ${el.type}},`);
 
         if (el.type === 'changed') {
@@ -73,7 +73,7 @@ const getJSON = (AST) => {
         return temp;
       }
 
-      acc.push(`{'name': ${el.name}},`);
+      acc.push(`{'key': ${el.key}},`);
       acc.push(`{'type': ${el.type}},`);
 
       if (el.type === 'unchanged') {

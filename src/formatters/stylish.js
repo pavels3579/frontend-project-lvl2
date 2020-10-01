@@ -32,7 +32,7 @@ const getStylish = (AST) => {
       const newIndentAndSign = indent.repeat(level - 1);
 
       if (el.type === 'nested') {
-        acc.push(`${newIndent}${el.name}: {`);
+        acc.push(`${newIndent}${el.key}: {`);
 
         const temp = getResult(el.children, level + 1);
         temp.push(`${newIndent}}`);
@@ -42,18 +42,18 @@ const getStylish = (AST) => {
 
       if (el.value[0] instanceof Object) {
         if (el.type === 'unchanged') {
-          acc.push(`${newIndent}${el.name}: {`);
+          acc.push(`${newIndent}${el.key}: {`);
         } else if (el.type === 'changed') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  - ${el.key}: {`);
         } else if (el.type === 'deleted') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  - ${el.key}: {`);
         } else if (el.type === 'added') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  + ${el.key}: {`);
         }
 
         const temp = addObject(el.value[0], acc, level + 1);
         if (el.type === 'changed') {
-          temp.push(`${newIndentAndSign}  + ${el.name}: ${el.value[1]}`);
+          temp.push(`${newIndentAndSign}  + ${el.key}: ${el.value[1]}`);
         }
 
         return temp;
@@ -61,14 +61,14 @@ const getStylish = (AST) => {
 
       if (el.value[1] instanceof Object) {
         if (el.type === 'unchanged') {
-          acc.push(`${newIndent}${el.name}: {`);
+          acc.push(`${newIndent}${el.key}: {`);
         } else if (el.type === 'changed') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: ${el.value[0]}`);
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
+          acc.push(`${newIndentAndSign}  + ${el.key}: {`);
         } else if (el.type === 'deleted') {
-          acc.push(`${newIndentAndSign}  - ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  - ${el.key}: {`);
         } else if (el.type === 'added') {
-          acc.push(`${newIndentAndSign}  + ${el.name}: {`);
+          acc.push(`${newIndentAndSign}  + ${el.key}: {`);
         }
 
         const temp = addObject(el.value[1], acc, level + 1);
@@ -77,23 +77,23 @@ const getStylish = (AST) => {
       }
 
       if (el.type === 'unchanged') {
-        acc.push(`${newIndent}${el.name}: ${el.value[0]}`);
+        acc.push(`${newIndent}${el.key}: ${el.value[0]}`);
         return acc;
       }
 
       if (el.type === 'changed') {
-        acc.push(`${newIndentAndSign}  - ${el.name}: ${el.value[0]}`);
-        acc.push(`${newIndentAndSign}  + ${el.name}: ${el.value[1]}`);
+        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
+        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.value[1]}`);
         return acc;
       }
 
       if (el.type === 'deleted') {
-        acc.push(`${newIndentAndSign}  - ${el.name}: ${el.value[0]}`);
+        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
         return acc;
       }
 
       if (el.type === 'added') {
-        acc.push(`${newIndentAndSign}  + ${el.name}: ${el.value[0]}`);
+        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.value[0]}`);
         return acc;
       }
 

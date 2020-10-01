@@ -7,13 +7,13 @@ const getPlain = (AST) => {
   const getResult = (data, parent) => {
     const result = data.reduce((acc, el) => {
       if (el.type === 'nested') {
-        const parentName = parent === '' ? el.name : `${parent}.${el.name}`;
+        const parentName = parent === '' ? el.key : `${parent}.${el.key}`;
         const temp = getResult(el.children, parentName);
 
         return temp;
       }
 
-      const fullName = parent === '' ? el.name : `${parent}.${el.name}`;
+      const fullName = parent === '' ? el.key : `${parent}.${el.key}`;
 
       if (el.value[0] instanceof Object) {
         if (el.type === 'changed') {
