@@ -1,10 +1,7 @@
 import yaml from 'js-yaml';
 import ini from 'ini';
-import getContent from './getContent.js';
 
-const getData = (pathToFile, type) => {
-  const content = getContent(pathToFile);
-
+const getData = (content, type) => {
   switch (type) {
     case 'json':
       return JSON.parse(content);
