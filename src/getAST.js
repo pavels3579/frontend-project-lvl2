@@ -33,7 +33,6 @@ const getAST = (data1, data2) => {
     return {
       key, type: 'changed', value: data1[key], valueAfter: data2[key],
     };
-
   });
 
   return result;
