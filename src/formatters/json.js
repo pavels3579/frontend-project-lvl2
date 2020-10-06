@@ -33,7 +33,7 @@ const getJSON = (AST) => {
         return temp;
       }
 
-      if (el.value[0] instanceof Object) {
+      if (el.value instanceof Object) {
         acc.push(`{'key': ${el.key}},`);
         acc.push(`{'type': ${el.type}},`);
 
@@ -45,9 +45,9 @@ const getJSON = (AST) => {
           acc.push("{'value': {");
         }
 
-        const temp = addObject(el.value[0], acc);
+        const temp = addObject(el.value, acc);
         if (el.type === 'changed') {
-          acc.push(`}, {'valueafter': ${el.value[1]},`);
+          acc.push(`}, {'valueafter': ${el.valueAfter},`);
         } else {
           acc.push('},');
         }
@@ -55,16 +55,16 @@ const getJSON = (AST) => {
         return temp;
       }
 
-      if (el.value[1] instanceof Object) {
+      if (el.valueAfter instanceof Object) {
         acc.push(`{'key': ${el.key}},`);
         acc.push(`{'type': ${el.type}},`);
 
         if (el.type === 'changed') {
-          acc.push(`{'valuebefore': ${el.value[0]}},`);
+          acc.push(`{'valuebefore': ${el.value}},`);
           acc.push("{'valueafter': {");
         }
 
-        const temp = addObject(el.value[1], acc);
+        const temp = addObject(el.valueAfter, acc);
 
         if (el.type === 'changed') {
           acc.push('},');
@@ -77,23 +77,23 @@ const getJSON = (AST) => {
       acc.push(`{'type': ${el.type}},`);
 
       if (el.type === 'unchanged') {
-        acc.push(`{'value': ${el.value[0]}},`);
+        acc.push(`{'value': ${el.value}},`);
         return acc;
       }
 
       if (el.type === 'changed') {
-        acc.push(`{'valuebefore': ${el.value[0]}},`);
-        acc.push(`{'valueafter': ${el.value[1]}},`);
+        acc.push(`{'valuebefore': ${el.value}},`);
+        acc.push(`{'valueafter': ${el.valueAfter}},`);
         return acc;
       }
 
       if (el.type === 'deleted') {
-        acc.push(`{'value': ${el.value[0]}},`);
+        acc.push(`{'value': ${el.value}},`);
         return acc;
       }
 
       if (el.type === 'added') {
-        acc.push(`{'value': ${el.value[0]}},`);
+        acc.push(`{'value': ${el.value}},`);
         return acc;
       }
 

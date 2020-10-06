@@ -15,9 +15,9 @@ const getPlain = (AST) => {
 
       const fullName = parent === '' ? el.key : `${parent}.${el.key}`;
 
-      if (el.value[0] instanceof Object) {
+      if (el.value instanceof Object) {
         if (el.type === 'changed') {
-          acc.push(`Property '${fullName}' was updated. From [complex value] to '${el.value[1]}'`);
+          acc.push(`Property '${fullName}' was updated. From [complex value] to '${el.valueAfter}'`);
         } else if (el.type === 'deleted') {
           acc.push(`Property '${fullName}' was removed`);
         } else if (el.type === 'added') {
@@ -27,9 +27,9 @@ const getPlain = (AST) => {
         return acc;
       }
 
-      if (el.value[1] instanceof Object) {
+      if (el.valueAfter instanceof Object) {
         if (el.type === 'changed') {
-          acc.push(`Property '${fullName}' was updated. From ${el.value[0]} to [complex value]`);
+          acc.push(`Property '${fullName}' was updated. From ${el.value} to [complex value]`);
         }
 
         return acc;
@@ -40,7 +40,7 @@ const getPlain = (AST) => {
       }
 
       if (el.type === 'changed') {
-        acc.push(`Property '${fullName}' was updated. From '${el.value[0]}' to '${el.value[1]}'`);
+        acc.push(`Property '${fullName}' was updated. From '${el.value}' to '${el.valueAfter}'`);
         return acc;
       }
 
@@ -50,7 +50,7 @@ const getPlain = (AST) => {
       }
 
       if (el.type === 'added') {
-        acc.push(`Property '${fullName}' was added with value: '${el.value[0]}'`);
+        acc.push(`Property '${fullName}' was added with value: '${el.value}'`);
         return acc;
       }
 

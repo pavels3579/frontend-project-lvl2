@@ -40,7 +40,7 @@ const getStylish = (AST) => {
         return temp;
       }
 
-      if (el.value[0] instanceof Object) {
+      if (el.value instanceof Object) {
         if (el.type === 'unchanged') {
           acc.push(`${newIndent}${el.key}: {`);
         } else if (el.type === 'changed') {
@@ -51,49 +51,43 @@ const getStylish = (AST) => {
           acc.push(`${newIndentAndSign}  + ${el.key}: {`);
         }
 
-        const temp = addObject(el.value[0], acc, level + 1);
+        const temp = addObject(el.value, acc, level + 1);
         if (el.type === 'changed') {
-          temp.push(`${newIndentAndSign}  + ${el.key}: ${el.value[1]}`);
+          temp.push(`${newIndentAndSign}  + ${el.key}: ${el.valueAfter}`);
         }
 
         return temp;
       }
 
-      if (el.value[1] instanceof Object) {
-        if (el.type === 'unchanged') {
-          acc.push(`${newIndent}${el.key}: {`);
-        } else if (el.type === 'changed') {
-          acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
-          acc.push(`${newIndentAndSign}  + ${el.key}: {`);
-        } else if (el.type === 'deleted') {
-          acc.push(`${newIndentAndSign}  - ${el.key}: {`);
-        } else if (el.type === 'added') {
+      if (el.valueAfter instanceof Object) {
+        if (el.type === 'changed') {
+          acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value}`);
           acc.push(`${newIndentAndSign}  + ${el.key}: {`);
         }
 
-        const temp = addObject(el.value[1], acc, level + 1);
+        const temp = addObject(el.valueAfter, acc, level + 1);
 
         return temp;
       }
 
       if (el.type === 'unchanged') {
-        acc.push(`${newIndent}${el.key}: ${el.value[0]}`);
+        acc.push(`${newIndent}${el.key}: ${el.value}`);
         return acc;
       }
 
       if (el.type === 'changed') {
-        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
-        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.value[1]}`);
+        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value}`);
+        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.valueAfter}`);
         return acc;
       }
 
       if (el.type === 'deleted') {
-        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value[0]}`);
+        acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value}`);
         return acc;
       }
 
       if (el.type === 'added') {
-        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.value[0]}`);
+        acc.push(`${newIndentAndSign}  + ${el.key}: ${el.value}`);
         return acc;
       }
 

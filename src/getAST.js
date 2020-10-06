@@ -12,27 +12,28 @@ const getAST = (data1, data2) => {
       };
     }
 
-    if (_.has(data1, key) && _.has(data2, key)) {
-      if (data1[key] === data2[key]) {
-        return {
-          key, type: 'unchanged', value: [data1[key], data2[key]],
-        };
-      }
-
+    if (_.isEqual(data1[key], data2[key])) {
       return {
-        key, type: 'changed', value: [data1[key], data2[key]],
+        key, type: 'unchanged', value: data1[key],
       };
     }
 
-    if (_.has(data2, key)) {
+    if (_.has(data2, key) && !_.has(data1, key)) {
       return {
-        key, type: 'added', value: [data2[key]],
+        key, type: 'added', value: data2[key],
+      };
+    }
+
+    if (_.has(data1, key) && !_.has(data2, key)) {
+      return {
+        key, type: 'deleted', value: data1[key],
       };
     }
 
     return {
-      key, type: 'deleted', value: [data1[key]],
+      key, type: 'changed', value: data1[key], valueAfter: data2[key],
     };
+
   });
 
   return result;
