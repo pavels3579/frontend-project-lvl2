@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import EndOfLine from '../getEOL.js';
 
 const addObject = (obj, res, level) => {
@@ -8,7 +9,7 @@ const addObject = (obj, res, level) => {
   const keys = Object.keys(obj);
 
   const result = keys.reduce((acc, el) => {
-    if (obj[el] instanceof Object) {
+    if (_.isObject(obj[el])) {
       acc.push(`${newIndent}${el}: {`);
       return addObject(obj[el], acc, level + 1);
     }
@@ -40,7 +41,7 @@ const getStylish = (AST) => {
         return temp;
       }
 
-      if (el.value instanceof Object) {
+      if (_.isObject(el.value)) {
         if (el.type === 'unchanged') {
           acc.push(`${newIndent}${el.key}: {`);
         } else if (el.type === 'changed') {
@@ -59,7 +60,7 @@ const getStylish = (AST) => {
         return temp;
       }
 
-      if (el.valueAfter instanceof Object) {
+      if (_.isObject(el.valueAfter)) {
         if (el.type === 'changed') {
           acc.push(`${newIndentAndSign}  - ${el.key}: ${el.value}`);
           acc.push(`${newIndentAndSign}  + ${el.key}: {`);
