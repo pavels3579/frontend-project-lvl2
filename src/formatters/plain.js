@@ -1,5 +1,3 @@
-import EndOfLine from '../getEOL.js';
-
 const getPlain = (AST) => {
   const res = [];
   const stertParent = '';
@@ -63,7 +61,7 @@ const getPlain = (AST) => {
   const tree = getResult(AST, stertParent);
   tree.sort();
 
-  return tree.join(EndOfLine);
+  return tree.join('\n');
 };
 
 export default getPlain;
