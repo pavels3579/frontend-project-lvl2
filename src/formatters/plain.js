@@ -1,67 +1,37 @@
-const getPlain = (AST) => {
-  const res = [];
-  const stertParent = '';
+import _ from 'lodash';
 
-  const getResult = (data, parent) => {
-    const result = data.reduce((acc, el) => {
-      if (el.type === 'nested') {
-        const parentName = parent === '' ? el.key : `${parent}.${el.key}`;
-        const temp = getResult(el.children, parentName);
+const addObject = (val) => {
+  if (_.isString(val)) {
+    return `'${val}'`;
+  }
 
-        return temp;
+  if (_.isObject(val)) {
+    return '[complex value]';
+  }
+
+  return val;
+};
+
+const getStylish = (AST, acc) => {
+  const getResult = (data) => {
+    const result = data.map((el) => {
+      const newAcc = acc === '' ? el.key : `${acc}.${el.key}`;
+      switch (el.type) {
+        case 'unchanged': return '';
+        case 'nested': return `${getStylish(el.children, newAcc)}`;
+        case 'added': return `Property '${newAcc}' was added with value: ${addObject(el.value)}`;
+        case 'deleted': return `Property '${newAcc}' was removed`;
+        case 'changed': return `Property '${newAcc}' was updated. From ${addObject(el.value)} to ${addObject(el.valueAfter)}`;
+        default: throw new Error(`Unknown type ${el.type}`);
       }
-
-      const fullName = parent === '' ? el.key : `${parent}.${el.key}`;
-
-      if (el.value instanceof Object) {
-        if (el.type === 'changed') {
-          acc.push(`Property '${fullName}' was updated. From [complex value] to '${el.valueAfter}'`);
-        } else if (el.type === 'deleted') {
-          acc.push(`Property '${fullName}' was removed`);
-        } else if (el.type === 'added') {
-          acc.push(`Property '${fullName}' was added with value: [complex value]`);
-        }
-
-        return acc;
-      }
-
-      if (el.valueAfter instanceof Object) {
-        if (el.type === 'changed') {
-          acc.push(`Property '${fullName}' was updated. From ${el.value} to [complex value]`);
-        }
-
-        return acc;
-      }
-
-      if (el.type === 'unchanged') {
-        return acc;
-      }
-
-      if (el.type === 'changed') {
-        acc.push(`Property '${fullName}' was updated. From '${el.value}' to '${el.valueAfter}'`);
-        return acc;
-      }
-
-      if (el.type === 'deleted') {
-        acc.push(`Property '${fullName}' was removed`);
-        return acc;
-      }
-
-      if (el.type === 'added') {
-        acc.push(`Property '${fullName}' was added with value: '${el.value}'`);
-        return acc;
-      }
-
-      return acc;
-    }, res);
+    });
 
     return result;
   };
 
-  const tree = getResult(AST, stertParent);
-  tree.sort();
+  const tree = getResult(AST);
 
-  return tree.join('\n');
+  return `${_.compact(tree).sort().join('\n')}`;
 };
 
-export default getPlain;
+export default (AST) => getStylish(AST, '');
