@@ -14,6 +14,6 @@ export default (AST, format) => {
       return getJSON(AST);
 
     default:
-      return getStylish(AST);
+      throw new Error(`Unknown format: '${format}'!`);
   }
 };

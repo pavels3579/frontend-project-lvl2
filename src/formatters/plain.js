@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const addObject = (val) => {
+const stringify = (val) => {
   if (_.isString(val)) {
     return `'${val}'`;
   }
@@ -12,16 +12,16 @@ const addObject = (val) => {
   return val;
 };
 
-const getStylish = (AST, acc) => {
+const getPlain = (AST, acc) => {
   const getResult = (data) => {
     const result = data.map((el) => {
       const newAcc = acc === '' ? el.key : `${acc}.${el.key}`;
       switch (el.type) {
         case 'unchanged': return '';
-        case 'nested': return `${getStylish(el.children, newAcc)}`;
-        case 'added': return `Property '${newAcc}' was added with value: ${addObject(el.value)}`;
+        case 'nested': return `${getPlain(el.children, newAcc)}`;
+        case 'added': return `Property '${newAcc}' was added with value: ${stringify(el.value)}`;
         case 'deleted': return `Property '${newAcc}' was removed`;
-        case 'changed': return `Property '${newAcc}' was updated. From ${addObject(el.value)} to ${addObject(el.valueAfter)}`;
+        case 'changed': return `Property '${newAcc}' was updated. From ${stringify(el.valueBefore)} to ${stringify(el.valueAfter)}`;
         default: throw new Error(`Unknown type ${el.type}`);
       }
     });
@@ -34,4 +34,4 @@ const getStylish = (AST, acc) => {
   return `${_.compact(tree).sort().join('\n')}`;
 };
 
-export default (AST) => getStylish(AST, '');
+export default (AST) => getPlain(AST, '');
