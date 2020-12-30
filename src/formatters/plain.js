@@ -12,10 +12,16 @@ const stringify = (val) => {
   return val;
 };
 
+const getNewAcc = (acc, key) => {
+  if (acc === '') return key;
+
+  return `${acc}.${key}`;
+};
+
 const getPlain = (AST, acc) => {
   const getResult = (data) => {
     const result = data.map((el) => {
-      const newAcc = acc === '' ? el.key : `${acc}.${el.key}`;
+      const newAcc = getNewAcc(acc, el.key);
       switch (el.type) {
         case 'unchanged': return '';
         case 'nested': return `${getPlain(el.children, newAcc)}`;
@@ -30,7 +36,6 @@ const getPlain = (AST, acc) => {
   };
 
   const tree = getResult(AST);
-
   return `${_.compact(tree).sort().join('\n')}`;
 };
 
