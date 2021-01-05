@@ -13,7 +13,7 @@ const getData = (content, type) => {
       return ini.parse(content);
 
     default:
-      throw new Error(`Unknown file format: '${type}'!`);
+      throw new Error(`Unknown type: '${type}'!`);
   }
 };
 
