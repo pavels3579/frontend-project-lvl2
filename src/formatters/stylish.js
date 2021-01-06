@@ -26,12 +26,18 @@ const getStylish = (ast, depth) => {
       const currentIndent = ' '.repeat((level) * indent + initial);
 
       switch (el.type) {
-        case 'unchanged': return `${currentIndent}  ${el.key}: ${stringify(el.value, level)}`;
-        case 'nested': return `${currentIndent}  ${el.key}: ${getStylish(el.children, level + 1)}`;
-        case 'added': return `${currentIndent}+ ${el.key}: ${stringify(el.value, level)}`;
-        case 'deleted': return `${currentIndent}- ${el.key}: ${stringify(el.value, level)}`;
-        case 'changed': return `${currentIndent}- ${el.key}: ${stringify(el.valueBefore, level)}\n${currentIndent}+ ${el.key}: ${stringify(el.valueAfter, level)}`;
-        default: throw new Error(`Unknown type ${el.type}`);
+        case 'unchanged':
+          return `${currentIndent}  ${el.key}: ${stringify(el.value, level)}`;
+        case 'nested':
+          return `${currentIndent}  ${el.key}: ${getStylish(el.children, level + 1)}`;
+        case 'added':
+          return `${currentIndent}+ ${el.key}: ${stringify(el.value, level)}`;
+        case 'deleted':
+          return `${currentIndent}- ${el.key}: ${stringify(el.value, level)}`;
+        case 'changed':
+          return `${currentIndent}- ${el.key}: ${stringify(el.valueBefore, level)}\n${currentIndent}+ ${el.key}: ${stringify(el.valueAfter, level)}`;
+        default:
+          throw new Error(`Unknown type ${el.type}`);
       }
     });
 
