@@ -9,23 +9,17 @@ const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-const formats = ['json', 'ini', 'yml'];
-const fileNames = formats.map((el) => [`${el}`, getFixturePath(`before.${el}`), getFixturePath(`after.${el}`)]);
+const formats = [
+  ['json', 'stylish'], ['ini', 'stylish'], ['yml', 'stylish'],
+  ['json', 'plain'], ['ini', 'plain'], ['yml', 'plain'],
+  ['json', 'json'], ['ini', 'json'], ['yml', 'json'],
+];
+const fileNames = formats.map((el) => [`${el[1]}`, `${el[0]}`, getFixturePath(`before.${el[0]}`), getFixturePath(`after.${el[0]}`)]);
 
 describe('gendiff', () => {
-  const resultStylish = getContent(getFixturePath('result_stylish'));
-  const resultPlain = getContent(getFixturePath('plain'));
-  const resultJson = getContent(getFixturePath('json'));
+  const getResult = (format) => getContent(getFixturePath(format));
 
-  test.each(fileNames)('gendiff tree %s, stylish format)', (format, pathToFile1, pathToFile2) => {
-    expect(genDiff(pathToFile1, pathToFile2)).toEqual(resultStylish);
-  });
-
-  test.each(fileNames)('gendiff tree %s, plain format)', (format, pathToFile1, pathToFile2) => {
-    expect(genDiff(pathToFile1, pathToFile2, 'plain')).toEqual(resultPlain);
-  });
-
-  test.each(fileNames)('gendiff tree %s, json format)', (format, pathToFile1, pathToFile2) => {
-    expect(genDiff(pathToFile1, pathToFile2, 'json')).toEqual(resultJson);
+  test.each(fileNames)('gendiff %s, %s format)', (format, type, pathToFile1, pathToFile2) => {
+    expect(genDiff(pathToFile1, pathToFile2, format)).toEqual(getResult(format));
   });
 });
