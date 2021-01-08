@@ -14,10 +14,10 @@ const formats = ['json', 'ini', 'yml'];
 describe('gendiff', () => {
   const getResult = (format) => getContent(getFixturePath(format));
 
-  test.each(formats)('gendiff %s format)', (format) => {
+  test.each(formats)('gendiff %s format', (format) => {
     const pathToFile1 = getFixturePath(`before.${format}`);
     const pathToFile2 = getFixturePath(`after.${format}`);
-    expect(genDiff(pathToFile1, pathToFile2, 'stylish')).toEqual(getResult('stylish'));
+    expect(genDiff(pathToFile1, pathToFile2)).toEqual(getResult('stylish'));
     expect(genDiff(pathToFile1, pathToFile2, 'plain')).toEqual(getResult('plain'));
     expect(genDiff(pathToFile1, pathToFile2, 'json')).toEqual(getResult('json'));
   });
